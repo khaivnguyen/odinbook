@@ -1,0 +1,10 @@
+<h1>All Posts</h1>
+
+<%= link_to 'Create New Post', new_post_path %>
+
+<% @posts.each do |post| %>
+  <div>
+    <p><%= post.body %></p>
+    <p><small>Posted by <%= post.user.email %> at <%= post.created_at %></small></p>
+  </div>
+<% end %>
