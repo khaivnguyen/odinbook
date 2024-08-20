@@ -1,0 +1,20 @@
+<nav class="bg-black p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <!-- Logo -->
+    <div class="text-white text-lg font-semibold">
+      <%= link_to 'MySocialApp', root_path %>
+    </div>
+
+    <!-- Links -->
+    <div class="space-x-4">
+      <% if user_signed_in? %>
+        <%= link_to 'Home', root_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+        <%= link_to 'Profile', user_path(current_user), class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+      <% else %>
+        <%= link_to 'Sign In', new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
