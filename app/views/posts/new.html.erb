@@ -1,14 +1,14 @@
-<h1>New Post</h1>
+<div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-900">New Post</h1>
 
-<%= form_with(model: @post) do |form| %>
-  <div>
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
+  <%= form_with(model: @post, class: "space-y-6") do |form| %>
+    <div>
+      <%= form.text_area :body, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", rows: 4 %>
+    </div>
 
-  <div>
-    <%= form.submit 'Create Post' %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', posts_path %>
+    <div class="flex items-center justify-between">
+      <%= form.submit 'Create Post', class: "px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      <%= link_to 'Back', posts_path, class: "text-sm text-indigo-600 hover:text-indigo-800" %>
+    </div>
+  <% end %>
+</div>
