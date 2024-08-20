@@ -1,3 +1,17 @@
-<p><%= @post.body %><p>
-
-<p>Posted by <%= @post.user.email %> at <%= @post.created_at %></p>
+<div class="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+  <p class="mb-4"><%= @post.body %></p>
+  <p class="text-sm text-gray-600 mb-4">
+    Posted by <%= @post.user.email %> at <%= @post.created_at.strftime("%B %d, %Y %I:%M %p") %>
+  </p>
+  
+  <div id="like-section">
+    <% if @post.liked_by?(current_user) %>
+      <%= button_to 'Unlike', post_like_path(@post), method: :delete, remote: true, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+    <% else %>
+      <%= button_to 'Like', post_likes_path(@post), method: :post, remote: true, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <% end %>
+    <span class="ml-2">
+      <%= pluralize(@post.likes.count, 'like') %>
+    </span>
+  </div>
+</div>
