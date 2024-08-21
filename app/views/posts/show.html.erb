@@ -1,17 +1,40 @@
 <div class="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-  <p class="mb-4"><%= @post.body %></p>
+  <p class="mb-4 text-lg text-gray-800"><%= @post.body %></p>
   <p class="text-sm text-gray-600 mb-4">
-    Posted by <%= @post.user.email %> at <%= @post.created_at.strftime("%B %d, %Y %I:%M %p") %>
+    Posted by <span class="font-semibold"><%= @post.user.email %></span> at <%= @post.created_at.strftime("%B %d, %Y %I:%M %p") %>
   </p>
   
-  <div id="like-section">
+  <div id="like-section" class="flex items-center mb-4">
     <% if @post.liked_by?(current_user) %>
-      <%= button_to 'Unlike', post_like_path(@post), method: :delete, remote: true, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= button_to 'Unlike', post_like_path(@post), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
     <% else %>
-      <%= button_to 'Like', post_likes_path(@post), method: :post, remote: true, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= button_to 'Like', post_likes_path(@post), method: :post, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% end %>
-    <span class="ml-2">
+    <span class="ml-2 text-gray-700">
       <%= pluralize(@post.likes.count, 'like') %>
     </span>
   </div>
+
+  <%= form_with(model: [@post, @post.comments.build], local: true, class: "mb-6") do |form| %>
+    <div class="mb-4">
+      <%= form.text_area :body, rows: 3, class: "w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+    <%= form.submit 'Add Comment', class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+  <% end %>
+
+  <h2 class="text-xl font-semibold mb-4 text-gray-800">Comments</h2>
+  <div class="space-y-4">
+    <% @comments.each do |comment| %>
+      <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+        <p class="text-gray-800"><%= comment.body %></p>
+        <p class="text-sm text-gray-600 mt-2">
+          <%= comment.user ? comment.user.email : 'Unknown' %> <%= comment.created_at ? 'on ' + comment.created_at.strftime("%B %d, %Y %I:%M %p") : '' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+
 </div>
+
+
+
