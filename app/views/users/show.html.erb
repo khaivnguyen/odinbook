@@ -1,39 +1,39 @@
-<div class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-  <!-- Profile Photo -->
-  <div class="flex items-center mb-6">
+<div class="max-w-4xl mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">
+  <div class="flex items-center mb-8">
     <% if @user.profile_photo.attached? %>
-      <%= image_tag @user.profile_photo.variant(resize_to_fill: [150, 150]), class: "rounded-full mr-5" %>
+      <%= image_tag @user.profile_photo.variant(resize_to_fill: [150, 150]), class: "w-24 h-24 rounded-full shadow-lg mr-5" %>
     <% end %>
 
-    <%= form_with(model: @user, local: true, url: user_path(@user), method: :patch, multipart: true) do |form| %>
-      <div class="mb-4">
-        <%= form.label :profile_photo, "Change Profile Photo" %>
-       <%= form.file_field :profile_photo %>
+    <%= form_with(model: @user, local: true, url: user_path(@user), method: :patch, multipart: true, class: "flex-1") do |form| %>
+      <div class="flex items-center space-x-4">
+        <div class="flex-1">
+          <%= form.label :profile_photo, "Change Profile Photo", class: "block text-sm font-medium text-gray-700" %>
+          <%= form.file_field :profile_photo, class: "mt-1 block w-full text-sm text-gray-900 border-gray-300 cursor-pointer focus:outline-none focus:ring focus:border-blue-300" %>
+        </div>
+        <%= form.submit "Update", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
       </div>
-    <%= form.submit "Update", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-  <% end %>
-
-
-    <!-- Profile Information -->
-    <div>
-      <h1 class="text-2xl font-bold"><%= @user.email %></h1>
-    </div>
+    <% end %>
   </div>
 
-  <!-- User's Posts -->
-  <h2 class="text-xl font-semibold mb-4 text-gray-800">Posts</h2>
-  <% if @posts.any? %>
-    <div class="space-y-6">
-      <% @posts.each do |post| %>
-        <div class="p-6 bg-gray-100 rounded-lg shadow-sm">
-          <p class="text-gray-800"><%= post.body %></p>
-          <p class="text-sm text-gray-600 mt-2">
-            Posted on <%= post.created_at.strftime("%B %d, %Y %I:%M %p") %>
-          </p>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="text-gray-600">No posts yet.</p>
-  <% end %>
+  <div class="mb-8">
+    <h1 class="text-3xl font-extrabold text-gray-900"><%= @user.email %></h1>
+  </div>
+
+  <div>
+    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Posts</h2>
+    <% if @posts.any? %>
+      <div class="space-y-6">
+        <% @posts.each do |post| %>
+          <div class="p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+            <p class="text-gray-800 leading-relaxed"><%= post.body %></p>
+            <p class="text-sm text-gray-500 mt-4">
+              Posted on <%= post.created_at.strftime("%B %d, %Y %I:%M %p") %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-600">No posts yet.</p>
+    <% end %>
+  </div>
 </div>
