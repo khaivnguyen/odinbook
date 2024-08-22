@@ -17,4 +17,9 @@ class User < ApplicationRecord
   has_many :follow_requests_as_followee, class_name: 'FollowRequest', foreign_key: 'followee_id'
   has_many :followers, through: :follow_requests_as_followee, source: :follower
   has_many :following, through: :follow_requests_as_follower, source: :followee
+
+  after_create :send_welcome_email
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver_later
+  end
 end
