@@ -1,0 +1,11 @@
+<% if current_user.following.include?(user) %>
+  <%= button_to 'Unfollow', follow_request_path(current_user.follow_requests_as_follower.find_by(followee: user)), 
+      method: :delete, 
+      remote: true, 
+      class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+<% else %>
+  <%= button_to 'Follow', user_follow_requests_path(user), 
+      method: :post, 
+      remote: true, 
+      class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+<% end %>
