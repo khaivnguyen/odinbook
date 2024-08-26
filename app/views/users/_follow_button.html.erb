@@ -1,4 +1,4 @@
-<% if current_user.following.include?(user) %>
+<% if current_user.followings.include?(user) %>
   <%= button_to 'Unfollow', follow_request_path(current_user.follow_requests_as_follower.find_by(followee: user)), 
       method: :delete, 
       remote: true, 
