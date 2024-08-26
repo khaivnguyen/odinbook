@@ -2,7 +2,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    followed_user_ids = current_user.following.pluck(:id)
+    @posts = Post.where(user_id: [current_user.id] + followed_user_ids).order(created_at: :desc)
   end
 
   def show

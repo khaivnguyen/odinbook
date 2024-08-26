@@ -4,14 +4,14 @@
   <div class="space-y-4">
     <% @users.each do |user| %>
       <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
-        <div class="flex items-center">
-          <% if user.profile_photo.attached? %>
-            <%= image_tag user.profile_photo.variant(resize_to_limit: [50, 50]), class: "rounded-full mr-4" %>
-          <% else %>
-            <%= image_tag "default_profile_photo.png", class: "w-12 h-12 rounded-full mr-4" %>
-          <% end %>
-          <span class="text-lg text-gray-800"><%= user.email %></span>
-        </div>
+        <%= link_to user_path(user), class: "block" do %>
+          <div class="flex items-center">
+            <% if user.profile_photo.attached? %>
+              <%= image_tag user.profile_photo.variant(resize_to_limit: [50, 50]), class: "rounded-full mr-4" %>
+            <% end %>
+            <span class="text-lg text-gray-800"><%= user.email %></span>
+          </div>
+        <% end %>
         <div id="user-<%= user.id %>">
           <%= render partial: "follow_button", locals: { user: user } %>
         </div>
