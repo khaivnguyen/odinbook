@@ -1,0 +1,33 @@
+service: odinbook
+image: khaivnguyen02/odinbook
+
+servers:
+  web:
+    - 128.199.185.150
+
+# Credentials for your image host.
+registry:
+  username: khaivnguyen02
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  clear:
+    DB_HOST: 128.199.185.150
+  secret:
+    - RAILS_MASTER_KEY
+    - POSTGRES_PASSWORD
+
+accessories:
+  db:
+    image: postgres:15
+    host: 128.199.185.150
+    port: 5432
+    env:
+      clear:
+        POSTGRES_USER: 'odinbook_deploy'
+        POSTGRES_DB: 'odinbook_deploy_production'
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
